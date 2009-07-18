@@ -8,5 +8,5 @@ else
 	test=$1
 fi
 
-gcc "examples/$test.c" -o "$test" `pkg-config --cflags --libs gtk+`
-./$test
+gcc "examples/$test.c" -o test `pkg-config --cflags --libs gtk+`
+./test
