@@ -1,3 +1,6 @@
+#ifndef __GTK__
+#define __GTK__
+
 #include <QApplication>
 #include <QWidget>
 #include <QLabel>
@@ -9,6 +12,7 @@
 #include <QComboBox>
 #include <QCheckBox>
 #include <QTextEdit>
+#include <QMap>
 
 #include <glib/glib.h>
 
@@ -26,7 +30,7 @@
 #define GtkTextBuffer QTextEdit
 
 
-#define GtkButton QPushButton
+#define GtkButton GQTPushButton
 #define GtkLabel QLabel
 
 // Stupid GTK typecasting crap.
@@ -37,6 +41,8 @@
 #define GTK_WINDOW(x) x
 #define GTK_COMBO(x) dynamic_cast<QComboBox *>(x)
 #define GTK_TEXT_VIEW(x) dynamic_cast<QTextEdit *>(x)
+#define GTK_OBJECT(x) (void *)x
+#define GTK_SIGNAL_FUNC(x) (GCallback)x
 
 static QApplication *app = NULL;
 
@@ -101,3 +107,5 @@ void gtk_widget_show(GtkWidget *widget)
 #include <gtk/gtk_combo.h>
 #include <gtk/gtk_check_button.h>
 #include <gtk/gtk_text_view.h>
+
+#endif

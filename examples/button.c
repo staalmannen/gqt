@@ -1,5 +1,10 @@
 #include <gtk/gtk.h>
 
+void button_clicked(GtkWidget *widget, gpointer data)
+{
+	g_print("Button clicked\n");
+}
+
 int main (int argc, char *argv[])
 {
   /*-- Declare the GTK Widgets used in the program --*/
@@ -14,6 +19,8 @@ int main (int argc, char *argv[])
 
   /*-- Create a button --*/
   button = gtk_button_new_with_label("Click Me");
+
+  g_signal_connect(GTK_OBJECT(button), "clicked", GTK_SIGNAL_FUNC(button_clicked), NULL);
 
   /*-- Add the button to the window --*/
   gtk_container_add(GTK_CONTAINER (window), button);
