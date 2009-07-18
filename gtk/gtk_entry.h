@@ -9,7 +9,9 @@ void gtk_entry_set_editable(GtkEntry *entry, gboolean editable)
 {
 	Q_ASSERT(entry);
 
-	entry->setReadOnly(editable);
+	// The extra negation here is because gtk_entry_set_editable() wants 'false' for non-readable,
+	// but setReadOnly will of course want 'true' in the same condition.
+	entry->setReadOnly(!editable);
 }
 
 void gtk_entry_set_text(GtkEntry *entry, const gchar *text)
