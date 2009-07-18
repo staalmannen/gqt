@@ -100,6 +100,13 @@ void gtk_widget_show(GtkWidget *widget)
 	widget->show();
 }
 
+void gtk_widget_destroy(GtkWidget *widget)
+{
+	Q_ASSERT(widget);
+
+	delete widget;
+}
+
 #include <gtk/gtk_button.h>
 #include <gtk/gtk_window.h>
 #include <gtk/gtk_hbox.h>
