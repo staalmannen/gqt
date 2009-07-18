@@ -38,11 +38,11 @@ int main (int argc, char *argv[])
 
   /*-- Create some buttons to fill the vbox with --*/
   button1 = gtk_button_new_with_label("Button 1");
-  g_signal_connect(GTK_OBJECT(button1), "clicked", GTK_SIGNAL_FUNC(buttonone_click), NULL);
+  g_signal_connect(GTK_OBJECT(button1), "clicked", G_CALLBACK(buttonone_click), NULL);
   button2 = gtk_button_new_with_label("Button 2");
-  g_signal_connect(GTK_OBJECT(button2), "clicked", GTK_SIGNAL_FUNC(buttontwo_click), NULL);
+  g_signal_connect(GTK_OBJECT(button2), "clicked", G_CALLBACK(buttontwo_click), NULL);
   button3 = gtk_button_new_with_label("Button 3");
-  g_signal_connect(GTK_OBJECT(button3), "clicked", GTK_SIGNAL_FUNC(buttonthree_click), NULL);
+  g_signal_connect(GTK_OBJECT(button3), "clicked", G_CALLBACK(buttonthree_click), NULL);
 
   /*-- Create the hbox --*/
   hbox = gtk_hbox_new(FALSE,0);

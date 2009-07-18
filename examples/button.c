@@ -20,7 +20,7 @@ int main (int argc, char *argv[])
   /*-- Create a button --*/
   button = gtk_button_new_with_label("Click Me");
 
-  g_signal_connect(GTK_OBJECT(button), "clicked", GTK_SIGNAL_FUNC(button_clicked), NULL);
+  g_signal_connect(GTK_OBJECT(button), "clicked", G_CALLBACK(button_clicked), NULL);
 
   /*-- Add the button to the window --*/
   gtk_container_add(GTK_CONTAINER (window), button);

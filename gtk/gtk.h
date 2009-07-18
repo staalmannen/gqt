@@ -42,7 +42,6 @@
 #define GTK_COMBO(x) dynamic_cast<QComboBox *>(x)
 #define GTK_TEXT_VIEW(x) dynamic_cast<QTextEdit *>(x)
 #define GTK_OBJECT(x) (void *)x
-#define GTK_SIGNAL_FUNC(x) (GCallback)x
 
 static QApplication *app = NULL;
 

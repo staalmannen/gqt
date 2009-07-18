@@ -8,6 +8,7 @@
 #define gpointer void *
 #define gulong unsigned long
 
+
 #define FALSE false
 #define TRUE true
 
@@ -20,5 +21,7 @@ void g_print(const gchar *text)
 
 #include <glib/glib_glist.h>
 #include <glib/glib_signals.h>
+
+#define G_CALLBACK(x) (GCallback)x
 
 #endif
