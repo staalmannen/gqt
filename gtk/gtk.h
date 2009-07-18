@@ -7,6 +7,8 @@
 #include <QGridLayout>
 #include <QLineEdit>
 
+#include <glib/glib.h>
+
 #define GtkWidget QWidget
 
 #define GtkWindow QWidget
@@ -20,14 +22,6 @@
 
 #define GtkButton QPushButton
 #define GtkLabel QLabel
-
-#define gchar char
-#define gboolean bool
-#define gint int
-#define guint unsigned int
-
-#define FALSE false
-#define TRUE true
 
 // Stupid GTK typecasting crap.
 #define GTK_BOX(x) x
