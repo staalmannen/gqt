@@ -23,6 +23,7 @@
 #define GtkEntry QLineEdit
 #define GtkCombo QComboBox
 #define GtkTextView QTextEdit
+#define GtkTextBuffer QTextEdit
 
 
 #define GtkButton QPushButton
