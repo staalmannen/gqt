@@ -18,6 +18,11 @@ class GQTPushButton : public QPushButton
 
 #include <gtk/moc_gtk_button.h>
 
+GtkWidget *gtk_button_new()
+{
+	return new GtkButton(NULL, NULL);
+}
+
 GtkWidget *gtk_button_new_with_label(const gchar *text)
 {
 	Q_ASSERT(text);
