@@ -31,5 +31,8 @@ void gtk_window_set_default_size(GtkWindow *window, gint width, gint height)
 		return;
 	}
 
+	// GTK's docs don't mention what happens with negative sizes, and I really don't want to imagine how to handle this.
+	Q_ASSERT(width > 0 && height > 0);
+
 	window->resize(width, height);
 }
