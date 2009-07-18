@@ -41,8 +41,8 @@ void gtk_table_attach(GtkTable *table, GtkWidget *child,
 
 	qDebug("Adding item to table, left: %d, top %d, width %d, height %d", left_attach, top_attach, right_attach - left_attach, bottom_attach - top_attach);
 
-	// XXX: dynamic_cast throws? or does it leave e NULL if the cast fails.. we want to Q_ASSERT this if it is the latter!
 	QGridLayout *g = dynamic_cast<QGridLayout *>(table->layout());
+	Q_ASSERT(g);
 
 	g->addWidget(child, top_attach, left_attach, right_attach - left_attach, bottom_attach - top_attach, Qt::AlignCenter);
 }
