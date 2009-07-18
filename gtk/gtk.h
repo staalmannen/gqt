@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QCheckBox>
+#include <QTextEdit>
 
 #include <glib/glib.h>
 
@@ -21,6 +22,7 @@
 #define GtkTable QWidget /* ugh */
 #define GtkEntry QLineEdit
 #define GtkCombo QComboBox
+#define GtkTextView QTextEdit
 
 
 #define GtkButton QPushButton
@@ -33,6 +35,7 @@
 #define GTK_ENTRY(x) dynamic_cast<QLineEdit *>(x)
 #define GTK_WINDOW(x) x
 #define GTK_COMBO(x) dynamic_cast<QComboBox *>(x)
+#define GTK_TEXT_VIEW(x) dynamic_cast<QTextEdit *>(x)
 
 static QApplication *app = NULL;
 
@@ -96,3 +99,4 @@ void gtk_widget_show(GtkWidget *widget)
 #include <gtk/gtk_table.h>
 #include <gtk/gtk_combo.h>
 #include <gtk/gtk_check_button.h>
+#include <gtk/gtk_text_view.h>
