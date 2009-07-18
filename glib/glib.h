@@ -19,6 +19,14 @@ void g_print(const gchar *text)
 	printf("%s", text);
 }
 
+#include <QDir>
+
+const gchar *g_get_home_dir()
+{
+	QDir d = QDir::home();
+	return d.absolutePath().toLatin1();
+}
+
 #include <glib/glib_glist.h>
 #include <glib/glib_signals.h>
 
