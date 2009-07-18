@@ -1,0 +1,18 @@
+gtk signals to qt signals+slots
+-------------------------------
+
+This is complicated, politics aside. Problem is: how to translate things like gtk_signal_connect() to the Qt equivilant.
+
+GTK provides a fairly simplistic interface of signal name (i.e. "clicked") plus a function pointer to be called when that signal is triggered.
+
+Qt's interface is similar in some ways, but a little more tricky, mostly thanks to the OOP thrown in. Qt asks for an instance pointer, a signal name (e.g. "clicked()"), and a slot - which MUST be a member function on the instance. This is handled via 'public slots:' in the moc, which is going to make translation between the two hard at best.
+
+Solution #1:
+	Create a class with a map of signal name (e.g. 'clicked()') to funcptr lookup. Have methods to set these, query these, etc.
+	Subclass just about all the Qt widgets, and provide skeletal stubs for all slots (i.e. public slots: void clicked() {}).
+	Implement gtk_signal_connect() by using the first class' methods to set funcptrs.
+	Inside the stub slots, use lookup on the signals to find the funcptrs the gtk userland code sent in, and call them.
+
+The downside of this is that we're probably going to have to use the MOC.
+The other downside is that this is going to be quite a big pain in the ass to maintain, especially in the longer term.
+I don't really think there are a lot of alternatives, short of not writing signals support though...
