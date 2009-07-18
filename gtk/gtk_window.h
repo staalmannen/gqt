@@ -12,8 +12,24 @@ void gtk_window_set_title(GtkWindow *window, const gchar *title)
 	window->setWindowTitle(title);
 }
 
-// XXX: unimplemented
-void gtk_window_set_default_size(GtkWindow *window, guint x, guint y)
+// XXX: I am not sure this implementation is correct. GTK's documentation on it sucks ass. (it implies this should resize, but then, why 'default size'?)
+void gtk_window_set_default_size(GtkWindow *window, gint width, gint height)
 {
 	Q_ASSERT(window);
+
+	// Per GTK's documentation, width and size 0 are impossible, so they are changed to 1.
+	if (width == 0)
+		width = 1;
+
+	if (height == 0)
+		height = 1;
+
+	// Special case, per GTK documentation: width/height of -1 means that it goes back to the default size.
+	if (width == -1 && height == -1)
+	{
+		window->resize(window->sizeHint());
+		return;
+	}
+
+	window->resize(width, height);
 }
