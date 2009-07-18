@@ -48,42 +48,6 @@ void gtk_main()
 	app->exec();
 }
 
-GtkWidget *gtk_window_new(GtkWindowType type)
-{
-	// XXX: handle GtkWindowType properly.
-	return new GtkWidget(NULL);
-}
-
-// XXX: implement homogenous
-GtkWidget *gtk_hbox_new(gboolean homogenous, gint spacing)
-{
-	// Oh, dear god.
-	// In GTK, layouts are children of widgets. In Qt, they aren't.
-	// This fragile hack will work around that by creating a widget
-	// and a layout, setting the layout on the widget, 
-	// and returning the created widget. UGH.
-	GtkWidget *g = new GtkWidget(NULL);
-	GtkHBox *h = new GtkHBox(NULL);
-	h->setSpacing(spacing);
-	g->setLayout(h);
-	return g;
-}
-
-// XXX: implement homogenous
-GtkWidget *gtk_vbox_new(gboolean homogenous, gint spacing)
-{
-	// Oh, dear god.
-	// In GTK, layouts are children of widgets. In Qt, they aren't.
-	// This fragile hack will work around that by creating a widget
-	// and a layout, setting the layout on the widget, 
-	// and returning the created widget. UGH.
-	GtkWidget *g = new GtkWidget(NULL);
-	GtkVBox *h = new GtkVBox(NULL);
-	h->setSpacing(spacing);
-	g->setLayout(h);
-	return g;
-}
-
 // TODO: respect expand, fill, padding
 void gtk_box_pack_start(GtkBox *box, GtkWidget *child, gboolean expand, gboolean fill, guint padding)
 {
@@ -101,41 +65,17 @@ void gtk_box_pack_start(GtkBox *box, GtkWidget *child, gboolean expand, gboolean
 	box->layout()->addWidget(child);
 }
 
-void gtk_container_add(GtkContainer *container, GtkWidget *widget)
-{
-	Q_ASSERT(container && widget);
-
-	// XXX: no idea if this is correct!
-	gtk_box_pack_start(container, widget, false, false, 0);
-}
-
-void gtk_container_border_width(GtkContainer *container, guint border_width)
-{
-	Q_ASSERT(container && container->layout());
-	container->layout()->setContentsMargins(border_width, border_width, border_width, border_width);
-}
-
-GtkWidget *gtk_label_new(const gchar *text)
-{
-	Q_ASSERT(text);
-	GtkLabel *g = new GtkLabel(text, NULL);
-
-	// Set alignment so we mimic GTK's default.
-	g->setAlignment(Qt::AlignCenter);
-
-	return g;
-}
-
-GtkWidget *gtk_button_new_with_label(const gchar *text)
-{
-	Q_ASSERT(text);
-
-	return new GtkButton(text, NULL);
-}
-
 void gtk_widget_show(GtkWidget *widget)
 {
 	Q_ASSERT(widget);
 
 	widget->show();
 }
+
+#include <gtk/gtk_button.h>
+#include <gtk/gtk_window.h>
+#include <gtk/gtk_hbox.h>
+#include <gtk/gtk_vbox.h>
+#include <gtk/gtk_container.h>
+#include <gtk/gtk_label.h>
+
