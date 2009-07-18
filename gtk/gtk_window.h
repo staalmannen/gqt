@@ -2,7 +2,9 @@
 GtkWidget *gtk_window_new(GtkWindowType type)
 {
 	// XXX: handle GtkWindowType properly.
-	return new GtkWidget(NULL);
+	GtkWidget *g = new GtkWidget(NULL);
+	g->setAttribute(Qt::WA_DeleteOnClose);
+	return g;
 }
 
 void gtk_window_set_title(GtkWindow *window, const gchar *title)

@@ -63,12 +63,15 @@ void gtk_init(int *argc, char ***argv)
 {
 	// Don't allow double calls
 	Q_ASSERT(!app);
+
 	app = new QApplication(*argc, *argv);
 }
 
 void gtk_main()
 {
+	// XXX: this is quite probably wrong.
 	app->exec();
+	delete app;
 }
 
 // TODO: respect expand, fill, padding
@@ -80,12 +83,14 @@ void gtk_box_pack_start(GtkBox *box, GtkWidget *child, gboolean expand, gboolean
 	{
 		// XXX: is this behaviour correct? we need it for gtk_container_add() and the like on a main window (ugh)
 		GtkHBox *h = new GtkHBox(NULL);
+		h->setParent(box);
 		box->setLayout(h);
 	}
 
 	// GtkBox is actually a QWidget with a layout set to work around GTK's
 	// odd idea of layouts being widgets. Retrieve the set layout, and pack 
 	box->layout()->addWidget(child);
+	child->setParent(box);
 }
 
 void gtk_widget_show(GtkWidget *widget)

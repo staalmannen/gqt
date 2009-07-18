@@ -9,6 +9,7 @@ GtkWidget *gtk_table_new(guint rows, guint columns, gboolean homogenous)
 	// and returning the created widget. UGH.
 	GtkWidget *g = new GtkWidget(NULL);
 	QGridLayout *h = new QGridLayout(NULL);
+	h->setParent(g);
 	g->setLayout(h);
 	return g;
 }
@@ -31,4 +32,5 @@ void gtk_table_attach(GtkTable *table, GtkWidget *child,
 	Q_ASSERT(g);
 
 	g->addWidget(child, top_attach, left_attach, right_attach - left_attach, bottom_attach - top_attach, Qt::AlignCenter);
+	child->setParent(table);
 }

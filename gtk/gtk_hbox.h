@@ -9,6 +9,7 @@ GtkWidget *gtk_hbox_new(gboolean homogenous, gint spacing)
 	// and returning the created widget. UGH.
 	GtkWidget *g = new GtkWidget(NULL);
 	GtkHBox *h = new GtkHBox(NULL);
+	h->setParent(g);
 	h->setSpacing(spacing);
 	g->setLayout(h);
 	return g;
