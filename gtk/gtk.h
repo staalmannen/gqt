@@ -7,6 +7,7 @@
 #include <QGridLayout>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QCheckBox>
 
 #include <glib/glib.h>
 
@@ -94,3 +95,4 @@ void gtk_widget_show(GtkWidget *widget)
 #include <gtk/gtk_entry.h>
 #include <gtk/gtk_table.h>
 #include <gtk/gtk_combo.h>
+#include <gtk/gtk_check_button.h>
