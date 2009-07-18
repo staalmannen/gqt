@@ -5,11 +5,15 @@
 #include <QHBoxLayout>
 
 #define GtkWidget QWidget
+
 #define GtkBox QWidget /* ugh */
 #define GtkContainer QWidget /* ugh */
+#define GtkHBox QHBoxLayout
+#define GtkVBox QVBoxLayout
+
+
 #define GtkButton QPushButton
 #define GtkLabel QLabel
-#define GtkHBox QHBoxLayout
 
 #define gchar char
 #define gboolean bool
@@ -50,7 +54,7 @@ GtkWidget *gtk_window_new(GtkWindowType type)
 	return new GtkWidget(NULL);
 }
 
-// We can't return GtkWidget, as in Qt, layouts aren't widgets.
+// XXX: implement homogenous
 GtkWidget *gtk_hbox_new(gboolean homogenous, gint spacing)
 {
 	// Oh, dear god.
@@ -60,6 +64,21 @@ GtkWidget *gtk_hbox_new(gboolean homogenous, gint spacing)
 	// and returning the created widget. UGH.
 	GtkWidget *g = new GtkWidget(NULL);
 	GtkHBox *h = new GtkHBox(NULL);
+	h->setSpacing(spacing);
+	g->setLayout(h);
+	return g;
+}
+
+// XXX: implement homogenous
+GtkWidget *gtk_vbox_new(gboolean homogenous, gint spacing)
+{
+	// Oh, dear god.
+	// In GTK, layouts are children of widgets. In Qt, they aren't.
+	// This fragile hack will work around that by creating a widget
+	// and a layout, setting the layout on the widget, 
+	// and returning the created widget. UGH.
+	GtkWidget *g = new GtkWidget(NULL);
+	GtkVBox *h = new GtkVBox(NULL);
 	h->setSpacing(spacing);
 	g->setLayout(h);
 	return g;
