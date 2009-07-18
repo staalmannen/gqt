@@ -3,13 +3,19 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QGridLayout>
+#include <QLineEdit>
 
 #define GtkWidget QWidget
 
+#define GtkWindow QWidget
 #define GtkBox QWidget /* ugh */
 #define GtkContainer QWidget /* ugh */
 #define GtkHBox QHBoxLayout
 #define GtkVBox QVBoxLayout
+#define GtkTable QWidget /* ugh */
+#define GtkEntry QLineEdit
 
 
 #define GtkButton QPushButton
@@ -26,6 +32,9 @@
 // Stupid GTK typecasting crap.
 #define GTK_BOX(x) x
 #define GTK_CONTAINER(x) x
+#define GTK_TABLE(x) x
+#define GTK_ENTRY(x) x
+#define GTK_WINDOW(x) x
 
 static QApplication *app = NULL;
 
@@ -33,6 +42,13 @@ enum GtkWindowType
 {
 	GTK_WINDOW_TOPLEVEL,
 	GTK_WINDOW_POPUP
+};
+
+enum GtkAttachOptions
+{
+	GTK_EXPAND,
+	GTK_SHRINK,
+	GTK_FILL
 };
 
 
@@ -78,4 +94,5 @@ void gtk_widget_show(GtkWidget *widget)
 #include <gtk/gtk_vbox.h>
 #include <gtk/gtk_container.h>
 #include <gtk/gtk_label.h>
-
+#include <gtk/gtk_entry.h>
+#include <gtk/gtk_table.h>
