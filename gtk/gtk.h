@@ -90,10 +90,10 @@ void gtk_container_add(GtkContainer *container, GtkWidget *widget)
 	gtk_box_pack_start(container, widget, false, false, 0);
 }
 
-// XXX: unimplemented
 void gtk_container_border_width(GtkContainer *container, guint border_width)
 {
-
+	Q_ASSERT(container && container->layout());
+	container->layout()->setContentsMargins(border_width, border_width, border_width, border_width);
 }
 
 GtkWidget *gtk_label_new(const gchar *text)
