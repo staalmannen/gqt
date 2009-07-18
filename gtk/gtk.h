@@ -29,7 +29,7 @@
 #define GTK_BOX(x) x
 #define GTK_CONTAINER(x) x
 #define GTK_TABLE(x) x
-#define GTK_ENTRY(x) x
+#define GTK_ENTRY(x) dynamic_cast<QLineEdit *>(x)
 #define GTK_WINDOW(x) x
 #define GTK_COMBO(x) dynamic_cast<QComboBox *>(x)
 
