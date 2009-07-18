@@ -43,7 +43,7 @@
 #define GTK_TEXT_VIEW(x) dynamic_cast<QTextEdit *>(x)
 #define GTK_OBJECT(x) (void *)x
 
-static QApplication *app = NULL;
+static QApplication *gdk_app = NULL;
 
 enum GtkWindowType
 {
@@ -62,16 +62,16 @@ enum GtkAttachOptions
 void gtk_init(int *argc, char ***argv)
 {
 	// Don't allow double calls
-	Q_ASSERT(!app);
+	Q_ASSERT(!gdk_app);
 
-	app = new QApplication(*argc, *argv);
+	gdk_app = new QApplication(*argc, *argv);
 }
 
 void gtk_main()
 {
 	// XXX: this is quite probably wrong.
-	app->exec();
-	delete app;
+	gdk_app->exec();
+	delete gdk_app;
 }
 
 // TODO: respect expand, fill, padding
