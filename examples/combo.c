@@ -1,5 +1,4 @@
 #include <gtk/gtk.h>
-#include <glib/glib.h>
 
 int main (int argc, char *argv[])
 {
