@@ -7,6 +7,7 @@
 #define guint unsigned int
 #define gpointer void *
 #define gulong unsigned long
+#define gssize size_t
 
 // XXX: We can only get at this via a function call to QDir, which is obviously not going to work at the preprocessor level.
 // We'll need to use Qt's system defines to make this work on windows.
@@ -66,6 +67,7 @@ gchar *g_strconcat(const gchar *string, ...)
 
 #include <glib/glib_glist.h>
 #include <glib/glib_signals.h>
+#include <glib/glib_gstring.h>
 
 #define G_CALLBACK(x) (GCallback)x
 
