@@ -36,6 +36,12 @@ const gchar *g_strerror(gint err)
 	return strerror(err);
 }
 
+gchar *g_path_get_basename(const gchar *file_name)
+{
+	QFileInfo fi(file_name);
+	return g_strdup(fi.baseName().toLatin1());
+}
+
 gchar *g_strdup(const gchar *str)
 {
 	return strdup(str);
