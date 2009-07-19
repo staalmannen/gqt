@@ -74,6 +74,16 @@ void gtk_main()
 	delete gdk_app;
 }
 
+gboolean gtk_true()
+{
+	return TRUE;
+}
+
+gboolean gtk_false()
+{
+	return FALSE;
+}
+
 // TODO: respect expand, fill, padding
 void gtk_box_pack_start(GtkBox *box, GtkWidget *child, gboolean expand, gboolean fill, guint padding)
 {

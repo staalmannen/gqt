@@ -31,6 +31,11 @@ void g_printerr(const gchar *fmt, ...)
 {
 }
 
+const gchar *g_strerror(gint err)
+{
+	return strerror(err);
+}
+
 gchar *g_strdup(const gchar *str)
 {
 	return strdup(str);
