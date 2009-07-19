@@ -30,8 +30,8 @@
 #define GtkTextView QTextEdit
 #define GtkTextBuffer QTextEdit
 #define GtkMenuBar QMenuBar
-#define GtkMenuShell QWidget /* ugh */
-#define GtkMenuItem QWidget
+#define GtkMenuShell QMenu
+#define GtkMenuItem QMenu
 
 
 #define GtkButton GQTPushButton
@@ -47,8 +47,8 @@
 #define GTK_TEXT_VIEW(x) dynamic_cast<QTextEdit *>(x)
 #define GTK_OBJECT(x) (void *)x
 #define GTK_MENU_BAR(x) dynamic_cast<QMenuBar *>(x)
-#define GTK_MENU_ITEM(x) x
-#define GTK_MENU(x) x
+#define GTK_MENU_ITEM(x) dynamic_cast<QMenu *>(x)
+#define GTK_MENU(x) dynamic_cast<QMenu *>(x)
 
 static QApplication *gdk_app = NULL;
 

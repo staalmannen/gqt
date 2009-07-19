@@ -1,36 +1,82 @@
+#if 0
+
+
+  /*-- Create the menu bar --*/
+  menubar = gtk_menu_bar_new();
+
+  /*-- Add the menubar to the vbox --*/
+  gtk_box_pack_start(GTK_BOX(vbox), menubar, FALSE, TRUE, 0);
+  gtk_widget_show(menubar);
+
+  /*-- Add the text area to the window --*/
+  gtk_container_add(GTK_CONTAINER(vbox), text);  
+
+  /*-- Add the vbox to the main window --*/
+  gtk_container_add(GTK_CONTAINER(window), vbox);
+  
+  /*---------------- Create File menu items ------------------*/
+
+  // Create top menu item
+  menuFile = gtk_menu_item_new_with_label ("File");
+
+  // Append to menu bar
+  gtk_menu_bar_append (GTK_MENU_BAR(menubar), menuFile);
+  gtk_widget_show(menuFile);
+
+  /*-- Create File submenu  --*/
+  menu = gtk_menu_new();
+  gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuFile), menu);
+
+  /*-- Create New menu item under File submenu --*/
+  menuitem = gtk_menu_item_new_with_label ("New");
+  gtk_menu_append(GTK_MENU(menu), menuitem);
+  gtk_widget_show (menuitem);
+
+#endif
+
+void gtk_menu_bar_append(GtkMenuBar *menubar, GtkWidget *widget)
+{
+	QMenu *m = dynamic_cast<QMenu *>(widget);
+	qDebug("gtk_menu_bar_append(): appending %p(%s) to menubar %p", m, m->title().toAscii().data(), menubar);
+
+	Q_ASSERT(menubar && m);
+
+	menubar->addMenu(m);
+	m->setParent(menubar);
+}
+
+// Create a menu bar
 GtkWidget *gtk_menu_bar_new()
 {
+	/*
+	QWidget *w = new QWidget(NULL);
+	QMenuBar *b = new QMenuBar(w);
+	QMenu *toplevel = new QMenu("file");
+	toplevel->addMenu(new QMenu("test"));
+	b->addMenu(toplevel);
+	w->show();
+	*/
+
 	return new QMenuBar(NULL);
 }
 
+// Create a submenu
 GtkWidget *gtk_menu_new()
 {
-	return new QMenu(NULL);
+	QMenu *q = new QMenu(NULL);
+	qDebug("gtk_menu_new(): returning %p", q);
+	return q;
 }
+QMap<void *, QMenu *> ohdeargod;
 
 void gtk_menu_item_set_submenu(GtkMenuItem *menu_item, GtkWidget *submenu)
 {
-	Q_ASSERT(menu_item && submenu);
+	// grargh.. gtk_menu_new() isn't really needed by us (it way overcomplicates things) so use a map to
+	// find the 'real' item and totally ignore the pointer returned by gtk_menu_new except for lookups..
+	//qDebug("gtk_menu_item_set_submenu(): Setting %p to lookup to %p", submenu, menu_item);
+	ohdeargod[submenu] = menu_item;
 
-#if 0
-	if (submenu->actions().count())
-	{
-		// menubar
-		//menu_item->addAction(submenu->actions()[0]);
-
-	}
-	else
-	{
-		// no idea what to do here. try pack?
-		QMenu
-		//gtk_container_add(menu_item, submenu);
-		// if we're here, menu_item is a "parent" type item like gtk_menu_bar_new().
-		// submenu		created from gtk_menu_item_new_with_label().
-		//
-	}
-
-
-#endif
+	// but ensure the fake gtk_menu_new() item is deleted when the lookup menu is deleted.
 	submenu->setParent(menu_item);
 }
 
@@ -38,35 +84,27 @@ GtkWidget *gtk_menu_item_new_with_label(const gchar *text)
 {
 	Q_ASSERT(text);
 
-	QWidget *q = new QWidget(NULL);
-	q->addAction(new QAction(text, q));
+	QWidget *q = new QMenu(text, NULL);
+	//qDebug("gtk_menu_item_new_with_label(): returning %p", q);
 	return q;
 }
 
-void gtk_menu_shell_append(GtkMenuShell *menu_shell, GtkWidget *child)
+void gtk_menu_append(GtkMenuShell *menu_shell, GtkWidget *child)
 {
-#if 0
-	Q_ASSERT(child && child->actions().count() > 0);
+	QMap<void *,  QMenu *>::ConstIterator it = ohdeargod.find(menu_shell);
 
-	QMenuBar *bar = dynamic_cast<QMenuBar *>(menu_shell);
+	// If it's the end, we didn't see it go into gtk_menu_item_set_submenu
+	Q_ASSERT(it != ohdeargod.end());
 
-	if (bar)
-	{
-		// adding to a menu bar
-		//gtk_container_add(menu_shell, child);
-		//QMenu *childm = dynamic_cast<QMenu *>(child);
-		//bar->addMenu(childm);
-		bar->addMenu(new QMenu("hi", NULL));
-	}
-	else
-	{
-		menu_shell->addAction(child->actions()[0]);
+	// so, we're really appending child_item to m
+	QMenu *m = *it;
+	QMenu *child_item = dynamic_cast<QMenu *>(child);
 
-	}
+//	qDebug("menu_append: asked to add %p to %p", child, menu_shell);
+	qDebug("menu_append: found parent menu %p(%s) and really adding child %p(%s)", m, m->title().toAscii().data(), child_item, child_item->title().toAscii().data());
 
-#endif
-	child->setParent(menu_shell);
+	// this appears to not work. WHY?
+	m->addMenu(child_item);
+	child_item->setParent(m);
 }
 
-#define gtk_menu_bar_append(x, y) gtk_menu_shell_append(x, y)
-#define gtk_menu_append(x, y) gtk_menu_shell_append(x, y)

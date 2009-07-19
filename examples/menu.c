@@ -86,7 +86,7 @@ int main (int argc, char *argv[])
   g_signal_connect(GTK_OBJECT (menuitem), "activate", G_CALLBACK (ClosingAppWindow), NULL);
   gtk_widget_show (menuitem);
   /*---------------- End File menu declarations ----------------*/
-
+#if 0
   /*---------------- Create Edit menu items --------------------*/
 
   menuEdit = gtk_menu_item_new_with_label ("Edit");
@@ -127,7 +127,7 @@ int main (int argc, char *argv[])
   gtk_menu_append(GTK_MENU(menu), menuitem);
   gtk_widget_show (menuitem);
   /*---------------- End Help menu declarations ----------------*/
-
+#endif
   /*-- Set window border to zero so that text area takes up the whole window --*/
   gtk_container_border_width (GTK_CONTAINER (window), 0);
 
@@ -141,8 +141,8 @@ int main (int argc, char *argv[])
   gtk_widget_show(text);
   gtk_widget_show(menuitem);
   gtk_widget_show(menuFile);
-  gtk_widget_show(menuEdit);    
-  gtk_widget_show(menuHelp);      
+ // gtk_widget_show(menuEdit);    
+ // gtk_widget_show(menuHelp);      
   gtk_widget_show(vbox);
   gtk_widget_show(window);
 
