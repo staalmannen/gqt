@@ -80,6 +80,8 @@ static GtkMenuBar *gqt_current_mb = NULL;
 
 void gtk_menu_bar_append(GtkMenuBar *menubar, GtkWidget *widget)
 {
+	Q_ASSERT(menubar && widget);
+
 	QMenu *m = dynamic_cast<QMenu *>(widget);
 	qDebug("gtk_menu_bar_append(): appending %p(%s) to menubar %p", m, m->title().toAscii().data(), menubar);
 
@@ -120,6 +122,9 @@ GtkWidget *gtk_menu_item_new_with_label(const gchar *text)
 {
 	Q_ASSERT(text);
 
+	// See comment where gqt_current_mb is defined for why this is done
+	Q_ASSERT(gqt_current_mb);
+
 	QWidget *q = new QMenu(text, gqt_current_mb);
 	//qDebug("gtk_menu_item_new_with_label(): returning %p", q);
 	return q;
@@ -127,6 +132,8 @@ GtkWidget *gtk_menu_item_new_with_label(const gchar *text)
 
 void gtk_menu_append(GtkMenuShell *menu_shell, GtkWidget *child)
 {
+	Q_ASSERT(menu_shell && child);
+
 	QMap<void *,  QMenu *>::ConstIterator it = gqt_menu_hack_lookup.find(menu_shell);
 
 	// If it's the end, we didn't see it go into gtk_menu_item_set_submenu
@@ -135,6 +142,8 @@ void gtk_menu_append(GtkMenuShell *menu_shell, GtkWidget *child)
 	// so, we're really appending child_item to m
 	QMenu *m = *it;
 	QMenu *child_item = dynamic_cast<QMenu *>(child);
+
+	Q_ASSERT(m && child_item);
 
 	m->addMenu(child_item);
 	child_item->setParent(m);
