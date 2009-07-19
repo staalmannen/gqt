@@ -38,3 +38,18 @@ void gtk_window_set_default_size(GtkWindow *window, gint width, gint height)
 
 	window->resize(width, height);
 }
+
+void gtk_window_set_modal(GtkWindow *window,gboolean modal)
+{
+	Q_ASSERT(window);
+
+	window->setWindowModality(modal ? Qt::ApplicationModal : Qt::NonModal);
+
+	// Qt doesn't allow modality to be changed on a visible window, so force a redisplay to
+	// emulate this since it seems GTK doesn't care. Hacks forever!
+	if (window->isVisible())
+	{
+		window->hide();
+		window->show();
+	}
+}
