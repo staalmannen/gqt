@@ -13,6 +13,7 @@
 #include <QCheckBox>
 #include <QTextEdit>
 #include <QMap>
+#include <QMenuBar>
 
 #include <glib/glib.h>
 
@@ -28,6 +29,9 @@
 #define GtkCombo QComboBox
 #define GtkTextView QTextEdit
 #define GtkTextBuffer QTextEdit
+#define GtkMenuBar QMenuBar
+#define GtkMenuShell QWidget /* ugh */
+#define GtkMenuItem QWidget
 
 
 #define GtkButton GQTPushButton
@@ -42,6 +46,9 @@
 #define GTK_COMBO(x) dynamic_cast<QComboBox *>(x)
 #define GTK_TEXT_VIEW(x) dynamic_cast<QTextEdit *>(x)
 #define GTK_OBJECT(x) (void *)x
+#define GTK_MENU_BAR(x) dynamic_cast<QMenuBar *>(x)
+#define GTK_MENU_ITEM(x) x
+#define GTK_MENU(x) x
 
 static QApplication *gdk_app = NULL;
 
@@ -134,5 +141,6 @@ void gtk_widget_destroy(GtkWidget *widget)
 #include <gtk/gtk_combo.h>
 #include <gtk/gtk_check_button.h>
 #include <gtk/gtk_text_view.h>
+#include <gtk/gtk_menu.h>
 
 #endif
