@@ -74,6 +74,12 @@ void gtk_main()
 	delete gdk_app;
 }
 
+void gtk_main_quit()
+{
+	// This will break out of gdk_app->exec().
+	QApplication::exit(0);
+}
+
 gboolean gtk_true()
 {
 	return TRUE;
