@@ -17,6 +17,16 @@ void button_clicked(GtkWidget *widget, gpointer data)
 		label = NULL;
 	}
 
+	GtkWidget *dlg = gtk_about_dialog_new();
+
+	gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dlg), "GCIF");
+	gtk_about_dialog_set_license(GTK_ABOUT_DIALOG(dlg), "free as in beer");
+	gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dlg), "1.0");
+	gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dlg), "i don't want comments");
+	g_signal_connect(G_OBJECT(dlg), "response", G_CALLBACK(gtk_widget_destroy), (gpointer)dlg);
+
+	gtk_widget_show(dlg);
+
 	g_print("Button clicked\n");
 }
 
