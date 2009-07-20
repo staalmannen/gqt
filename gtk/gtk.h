@@ -64,6 +64,10 @@ typedef QLabel GtkLabel;
 #define GTK_LABEL(x) dynamic_cast<QLabel *>(x)
 #define GTK_ABOUT_DIALOG(x) dynamic_cast<GQTAboutDialog *>(x)
 
+// Stock stuff
+#define GTK_STOCK_QUIT "gtk-quit"
+#define GTK_STOCK_ABOUT "gtk-about"
+
 enum GtkAttachOptions
 {
 	GTK_EXPAND,
