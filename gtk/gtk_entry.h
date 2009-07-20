@@ -36,3 +36,9 @@ void gtk_entry_append_text(GtkEntry *entry, const gchar *text)
 	entry->setText(entry->text() + text);
 }
 
+void gtk_entry_set_max_length(GtkEntry *entry, gint max_length)
+{
+	Q_ASSERT(entry);
+
+	entry->setMaxLength(max_length);
+}
