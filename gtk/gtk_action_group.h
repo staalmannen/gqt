@@ -1,5 +1,17 @@
 typedef QActionGroup GtkActionGroup;
-typedef QAction GtkActionEntry;
+//typedef QAction GtkActionEntry;
+
+// This really needs to be a struct thanks to the way userland code (and things like gtk_action_group_add_actions() works).
+typedef struct
+{
+	const gchar     *name;
+	const gchar     *stock_id;
+	const gchar     *label;
+	const gchar     *accelerator;
+	const gchar     *tooltip;
+	GCallback  callback;
+} GtkActionEntry;
+
 
 GtkActionGroup *gtk_action_group_new(const gchar *name)
 {
