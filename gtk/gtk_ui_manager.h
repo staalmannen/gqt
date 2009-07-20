@@ -23,7 +23,7 @@ void gtk_ui_manager_add_ui_from_string(GtkUIManager *uiman, const gchar *buffer,
 
 GtkWidget *gtk_ui_manager_get_widget(GtkUIManager *uiman, const gchar *widget_name)
 {
-
+	return new QWidget();
 }
 
 #define GtkAccelGroup void
