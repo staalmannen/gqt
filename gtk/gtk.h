@@ -98,6 +98,7 @@ enum GtkAttachOptions
 #include <gtk/gtk_widget.h>
 #include <gtk/gtk_frame.h>
 #include <gtk/gtk_action_group.h>
+#include <gtk/gtk_ui_manager.h>
 
 
 #endif

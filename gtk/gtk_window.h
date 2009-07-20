@@ -60,3 +60,9 @@ void gtk_window_set_modal(GtkWindow *window,gboolean modal)
 		window->show();
 	}
 }
+
+#define GtkAccelGroup void
+void gtk_window_add_accel_group(GtkWindow *window, GtkAccelGroup *g)
+{
+
+}
