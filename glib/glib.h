@@ -8,6 +8,7 @@
 #define gpointer void *
 #define gulong unsigned long
 #define gssize size_t
+#define gdouble double
 
 // XXX: We can only get at this via a function call to QDir, which is obviously not going to work at the preprocessor level.
 // We'll need to use Qt's system defines to make this work on windows.
