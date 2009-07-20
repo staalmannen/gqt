@@ -5,11 +5,21 @@ enum GtkWindowType
 	GTK_WINDOW_POPUP
 };
 
+class GQTWindow : public QWidget
+{
+ protected:
+	void closeEvent(QCloseEvent *event)
+	{
+		// Fire response signal.
+		gqt_signal_execute(this, "delete-event");
+	}
+};
+
 
 GtkWidget *gtk_window_new(GtkWindowType type)
 {
 	// XXX: handle GtkWindowType properly.
-	GtkWidget *g = new GtkWidget(NULL);
+	GtkWidget *g = new GQTWindow();
 	g->setAttribute(Qt::WA_DeleteOnClose);
 	return g;
 }
