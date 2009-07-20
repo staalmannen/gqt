@@ -1,5 +1,5 @@
 // glib overrides for signal bits
-typedef void (*GCallback)(gpointer);
+typedef void (*GCallback)(GtkWidget *target, gpointer);
 #define G_CALLBACK(x) (GCallback)x
 #define g_list_append(x, y) g_list_append(x, (void *)y)
 
@@ -14,9 +14,9 @@ class GQTSignalHandler
 	{
 	}
 
-	void invoke()
+	void invoke(GtkWidget *w)
 	{
-		this->callback(user_data);
+		this->callback(w, user_data);
 	}
 };
 
@@ -40,6 +40,8 @@ void gqt_signal_execute(void *widget, const gchar *signal)
 {
 	Q_ASSERT(widget && signal);
 
+	GtkWidget *w = (GtkWidget *)widget;
+
 	QMap<void *, QMap<QString, GQTSignalHandler *> >::ConstIterator it = gqt_signals.constFind(widget);
 
 	if (it == gqt_signals.end())
@@ -59,5 +61,5 @@ void gqt_signal_execute(void *widget, const gchar *signal)
 
 	qDebug("Invoking %s on %p", signal, widget);
 	GQTSignalHandler *s = *it2;
-	s->invoke();
+	s->invoke(w);
 }

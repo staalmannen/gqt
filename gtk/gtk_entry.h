@@ -1,7 +1,29 @@
+class GQTEntry : public QLineEdit
+{
+	Q_OBJECT
+ protected:
+ public:
+	GQTEntry() : QLineEdit()
+	{
+		this->connect(this, SIGNAL(textChanged(const QString&)), SLOT(gqt_changed(const QString&)));
+
+	}
+ public slots:
+	void gqt_changed(const QString &text)
+	{
+		// Fire signal.
+		gqt_signal_execute(this, "changed");
+	}
+};
+
+#include <gtk/moc_gtk_entry.h>
+
+typedef QLineEdit GtkEntry;
+#define GTK_ENTRY(x) dynamic_cast<GQTEntry *>(x)
 
 GtkWidget *gtk_entry_new()
 {
-	return new QLineEdit();
+	return new GQTEntry();
 }
 
 // XXX: is this deprecated?
