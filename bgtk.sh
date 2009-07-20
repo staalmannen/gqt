@@ -8,5 +8,6 @@ else
 	test=$1
 fi
 
-gcc -ggdb3 "examples/$test.c" -o test `pkg-config --cflags --libs gtk+-2.0`
+# we use g++ (not gcc) because to work with both gqt and gtk, some applications have to use c++ casts..
+g++ -ggdb3 "examples/$test.c" -o test `pkg-config --cflags --libs gtk+-2.0`
 ./test
