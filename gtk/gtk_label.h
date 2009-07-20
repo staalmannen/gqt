@@ -16,3 +16,10 @@ const gchar *gtk_label_get_text(GtkLabel *l)
 
 	return l->text().toAscii().constData();
 }
+
+void gtk_label_set_text(GtkLabel *l, const gchar *text)
+{
+	Q_ASSERT(l && text);
+
+	l->setText(text);
+}
