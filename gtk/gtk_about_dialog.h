@@ -1,4 +1,4 @@
-class GQTAboutDialog : public QWidget
+class GQTAboutDialog : public GQTDialog
 {
  private:
 	QLabel *program_name;
@@ -7,16 +7,8 @@ class GQTAboutDialog : public QWidget
 	QTextEdit *licence;
 
 	QVBoxLayout *layout;
-
- protected:
-	void closeEvent(QCloseEvent *event)
-	{
-		// Fire response signal.
-		gqt_signal_execute(this, "response");
-	}
-
  public:
-	GQTAboutDialog() : QWidget()
+	GQTAboutDialog() : GQTDialog()
 	{
 		QHBoxLayout *h;
 

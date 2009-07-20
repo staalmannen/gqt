@@ -135,6 +135,16 @@ void gtk_widget_destroy(GtkWidget *widget)
 	delete widget;
 }
 
+class GQTDialog : public QWidget
+{
+ protected:
+	void closeEvent(QCloseEvent *event)
+	{
+		// Fire response signal.
+		gqt_signal_execute(this, "response");
+	}
+};
+
 #include <gtk/gtk_button.h>
 #include <gtk/gtk_window.h>
 #include <gtk/gtk_hbox.h>
