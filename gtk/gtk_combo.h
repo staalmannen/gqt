@@ -1,6 +1,27 @@
 /* New combo box implementation. Apparantly GtkCombo wasn't good enough ;p */
-typedef QComboBox GtkComboBox;
-#define GTK_COMBO_BOX(x) dynamic_cast<QComboBox *>(x)
+class GQTComboBox : public QComboBox
+{
+	Q_OBJECT
+
+ protected:
+ public:
+	GQTComboBox() : QComboBox()
+	{
+		this->connect(this, SIGNAL(currentIndexChanged(int)), SLOT(gqt_currentIndexChanged(int)));
+	}
+
+ public slots:
+	 void gqt_currentIndexChanged(int index)
+	 {
+		// Fire signal
+		gqt_signal_execute(this, "changed");
+	 }
+};
+
+#include <gtk/moc_gtk_combo.h>
+
+typedef GQTComboBox GtkComboBox;
+#define GTK_COMBO_BOX(x) dynamic_cast<GQTComboBox *>(x)
 
 GtkWidget *gtk_combo_box_new_text()
 {
@@ -52,8 +73,8 @@ gint gtk_combo_box_get_active(GtkComboBox *combo_box)
 /**************************************************************
  * This code implements obsolete GTK interfaces.
  *************************************************************/
-typedef QComboBox GtkCombo;
-#define GTK_COMBO(x) dynamic_cast<QComboBox *>(x)
+typedef GQTComboBox GtkCombo;
+#define GTK_COMBO(x) dynamic_cast<GQTComboBox *>(x)
 
 GtkWidget *gtk_combo_new() MARK_DEPRECATED;
 GtkWidget *gtk_combo_new()
