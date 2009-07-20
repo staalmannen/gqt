@@ -34,7 +34,6 @@ typedef QVBoxLayout GtkVBox;
 typedef QWidget GtkTable;
 
 typedef QLineEdit GtkEntry;
-typedef QComboBox GtkCombo;
 typedef QTextEdit GtkTextView;
 	typedef QTextEdit GtkTextBuffer;
 typedef QMenuBar GtkMenuBar;
@@ -53,7 +52,6 @@ typedef QLabel GtkLabel;
 #define GTK_TABLE(x) x
 #define GTK_ENTRY(x) dynamic_cast<QLineEdit *>(x)
 #define GTK_WINDOW(x) x
-#define GTK_COMBO(x) dynamic_cast<QComboBox *>(x)
 #define GTK_TEXT_VIEW(x) dynamic_cast<QTextEdit *>(x)
 #define GTK_OBJECT(x) (void *)x /* obsolete */
 #define G_OBJECT(x) (void *)x

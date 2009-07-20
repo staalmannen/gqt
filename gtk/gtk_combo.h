@@ -1,6 +1,8 @@
 /**************************************************************
  * This code implements obsolete GTK interfaces.
  *************************************************************/
+typedef QComboBox GtkCombo;
+#define GTK_COMBO(x) dynamic_cast<QComboBox *>(x)
 
 GtkWidget *gtk_combo_new() MARK_DEPRECATED;
 GtkWidget *gtk_combo_new()
