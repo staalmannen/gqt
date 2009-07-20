@@ -32,6 +32,7 @@
 #define GtkMenuBar QMenuBar
 #define GtkMenuShell QMenu
 #define GtkMenuItem QMenu
+#define GtkAboutDialog GQTAboutDialog
 
 
 #define GtkButton GQTPushButton
@@ -45,11 +46,13 @@
 #define GTK_WINDOW(x) x
 #define GTK_COMBO(x) dynamic_cast<QComboBox *>(x)
 #define GTK_TEXT_VIEW(x) dynamic_cast<QTextEdit *>(x)
-#define GTK_OBJECT(x) (void *)x
+#define GTK_OBJECT(x) (void *)x /* obsolete */
+#define G_OBJECT(x) (void *)x
 #define GTK_MENU_BAR(x) dynamic_cast<QMenuBar *>(x)
 #define GTK_MENU_ITEM(x) dynamic_cast<QMenu *>(x)
 #define GTK_MENU(x) dynamic_cast<QMenu *>(x)
 #define GTK_LABEL(x) dynamic_cast<QLabel *>(x)
+#define GTK_ABOUT_DIALOG(x) dynamic_cast<GQTAboutDialog *>(x)
 
 static QApplication *gdk_app = NULL;
 
@@ -144,5 +147,6 @@ void gtk_widget_destroy(GtkWidget *widget)
 #include <gtk/gtk_check_button.h>
 #include <gtk/gtk_text_view.h>
 #include <gtk/gtk_menu.h>
+#include <gtk/gtk_about_dialog.h>
 
 #endif
