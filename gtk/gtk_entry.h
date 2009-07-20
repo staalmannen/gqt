@@ -23,6 +23,8 @@ void gtk_entry_set_text(GtkEntry *entry, const gchar *text)
 
 const gchar *gtk_entry_get_text(GtkEntry *entry)
 {
+	Q_ASSERT(entry);
+
 	return entry->text().toAscii().constData();
 }
 
