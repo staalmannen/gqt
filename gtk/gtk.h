@@ -1,6 +1,13 @@
 #ifndef __GTK__
 #define __GTK__
 
+// We override parts of glib (like signals), so make sure that glib is *always* included first.
+#ifndef g_signal_connect
+	#warning "You must include glib.h before gtk.h. I'm doing it for you for now."
+	#pragma message("You must include glib.h before gtk.h. I'm doing it for you for now.")
+	#include <glib.h>
+#endif
+
 #include <QApplication>
 #include <QWidget>
 #include <QLabel>
@@ -15,7 +22,7 @@
 #include <QMap>
 #include <QMenuBar>
 
-#include <glib/glib.h>
+//#include <glib/glib.h>
 
 typedef QWidget GtkWidget;
 typedef QWidget GtkWindow;
@@ -60,6 +67,9 @@ enum GtkAttachOptions
 	GTK_FILL
 };
 
+// Now, override the parts of glib that we need to.
+#include <gtk/glib_signals.h>
+
 
 #include <gtk/gqt_dialog.h>
 #include <gtk/gtk_box.h>
@@ -78,5 +88,6 @@ enum GtkAttachOptions
 #include <gtk/gtk_menu.h>
 #include <gtk/gtk_about_dialog.h>
 #include <gtk/gtk_widget.h>
+
 
 #endif

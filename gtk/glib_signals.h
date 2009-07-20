@@ -1,4 +1,7 @@
+// glib overrides for signal bits
 typedef void (*GCallback)(gpointer);
+#define G_CALLBACK(x) (GCallback)x
+#define g_list_append(x, y) g_list_append(x, (void *)y)
 
 class GQTSignalHandler
 {

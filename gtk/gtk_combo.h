@@ -3,6 +3,13 @@ GtkWidget *gtk_combo_new()
 	return new GtkCombo();
 }
 
+static void foreach_iter(gpointer data, gpointer user_data)
+{
+	GtkCombo *g = (GtkCombo *)user_data;
+
+	g->addItem((const char *)data);
+}
+
 // This is deprecated
 void gtk_combo_set_popdown_strings(GtkCombo *combo, GList *strings)
 {
@@ -10,10 +17,5 @@ void gtk_combo_set_popdown_strings(GtkCombo *combo, GList *strings)
 
 	combo->clear();
 
-	const void *item;
-
-	foreach (item, *strings)
-	{
-		combo->addItem(QString((const char *)item));
-	}
+	g_list_foreach(strings, foreach_iter, combo);
 }
