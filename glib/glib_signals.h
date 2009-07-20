@@ -1,8 +1,20 @@
-typedef void (*GCallback)(void);
-typedef void (*GClosureNotify)(void);
-enum GConnectFlags
+typedef void (*GCallback)(gpointer);
+
+class GQTSignalHandler
 {
-	FOOOF
+ private:
+	GCallback callback;
+	gpointer user_data;
+
+ public:
+	GQTSignalHandler(GCallback where_to, gpointer data) : callback(where_to), user_data(data)
+	{
+	}
+
+	void invoke()
+	{
+		this->callback(user_data);
+	}
 };
 
 /*
@@ -12,20 +24,20 @@ enum GConnectFlags
  * The first 'void *' key is the instance that is hooked (i.e. 'this').
  * It stores a map of signals which are hooked, i.e. 'clicked' -> pointer.
  */
-static QMap<void *, QMap<QString, GCallback> > gqt_signals;
+static QMap<void *, QMap<QString, GQTSignalHandler *> > gqt_signals;
 
 gulong g_signal_connect(gpointer instance, const gchar *detailed_signal, GCallback c_handler, gpointer data)
 {
 	Q_ASSERT(instance && detailed_signal && c_handler);
 	qDebug("g_signal_connect(): Hooked %s signal on %p going to %p", detailed_signal, instance, c_handler);
-	gqt_signals[instance][detailed_signal] = c_handler;
+	gqt_signals[instance][detailed_signal] = new GQTSignalHandler(c_handler, data);
 }
 
 void gqt_signal_execute(void *widget, const gchar *signal)
 {
 	Q_ASSERT(widget && signal);
 
-	QMap<void *, QMap<QString, GCallback> >::ConstIterator it = gqt_signals.constFind(widget);
+	QMap<void *, QMap<QString, GQTSignalHandler *> >::ConstIterator it = gqt_signals.constFind(widget);
 
 	if (it == gqt_signals.end())
 	{
@@ -33,8 +45,8 @@ void gqt_signal_execute(void *widget, const gchar *signal)
 		return;
 	}
 
-	QMap<QString, GCallback> m = *it;
-	QMap<QString, GCallback>::ConstIterator it2 = m.constFind(signal);
+	QMap<QString, GQTSignalHandler *> m = *it;
+	QMap<QString, GQTSignalHandler *>::ConstIterator it2 = m.constFind(signal);
 
 	if (it == gqt_signals.end())
 	{
@@ -43,8 +55,6 @@ void gqt_signal_execute(void *widget, const gchar *signal)
 	}
 
 	qDebug("Invoking %s on %p", signal, widget);
-
-	GCallback g = *it2;
-	g();
-
+	GQTSignalHandler *s = *it2;
+	s->invoke();
 }
