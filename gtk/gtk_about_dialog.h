@@ -22,7 +22,7 @@ void gtk_about_dialog_set_program_name(GtkAboutDialog *diag, const gchar *s)
 	Q_ASSERT(diag && s);
 }
 
-void gtk_about_dialog_set_licence(GtkAboutDialog *diag, const gchar *s)
+void gtk_about_dialog_set_license(GtkAboutDialog *diag, const gchar *s)
 {
 	Q_ASSERT(diag && s);
 
