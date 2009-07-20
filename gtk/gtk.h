@@ -121,30 +121,7 @@ void gtk_box_pack_start(GtkBox *box, GtkWidget *child, gboolean expand, gboolean
 	child->setParent(box);
 }
 
-void gtk_widget_show(GtkWidget *widget)
-{
-	Q_ASSERT(widget);
-
-	widget->show();
-}
-
-void gtk_widget_destroy(GtkWidget *widget)
-{
-	Q_ASSERT(widget);
-
-	delete widget;
-}
-
-class GQTDialog : public QWidget
-{
- protected:
-	void closeEvent(QCloseEvent *event)
-	{
-		// Fire response signal.
-		gqt_signal_execute(this, "response");
-	}
-};
-
+#include <gtk/gqt_dialog.h>
 #include <gtk/gtk_button.h>
 #include <gtk/gtk_window.h>
 #include <gtk/gtk_hbox.h>
@@ -158,5 +135,6 @@ class GQTDialog : public QWidget
 #include <gtk/gtk_text_view.h>
 #include <gtk/gtk_menu.h>
 #include <gtk/gtk_about_dialog.h>
+#include <gtk/gtk_widget.h>
 
 #endif
