@@ -17,6 +17,11 @@ void button_clicked(GtkWidget *widget, gpointer data)
 		label = NULL;
 	}
 
+	g_print("Button clicked\n");
+}
+
+void about_clicked(GtkWidget *widget, gpointer data)
+{
 	GtkWidget *dlg = gtk_about_dialog_new();
 
 	gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dlg), "GCIF");
@@ -26,8 +31,6 @@ void button_clicked(GtkWidget *widget, gpointer data)
 	g_signal_connect(G_OBJECT(dlg), "response", G_CALLBACK(gtk_widget_destroy), (gpointer)dlg);
 
 	gtk_widget_show(dlg);
-
-	g_print("Button clicked\n");
 }
 
 int main (int argc, char *argv[])
@@ -51,6 +54,13 @@ int main (int argc, char *argv[])
 
   /*-- Add the button to the window --*/
   gtk_container_add(GTK_CONTAINER (hbox), button);
+
+  /* Add a second one.. */
+  button = gtk_button_new_with_label("View About dialog");
+
+  g_signal_connect(GTK_OBJECT(button), "clicked", G_CALLBACK(about_clicked), NULL);
+
+  gtk_container_add(GTK_CONTAINER(hbox), button);
 
   /*-- Add a border to the window to give the button a little room --*/
   gtk_container_border_width (GTK_CONTAINER (hbox), 15);
