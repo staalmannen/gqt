@@ -35,6 +35,13 @@ void gtk_combo_box_remove_text(GtkComboBox *combo_box, gint position)
 	combo_box->removeItem(position);
 }
 
+void gtk_combo_box_set_active(GtkComboBox *combo_box, gint index_)
+{
+	Q_ASSERT(combo_box);
+
+	combo_box->setCurrentIndex(index_);
+}
+
 /**************************************************************
  * This code implements obsolete GTK interfaces.
  *************************************************************/
