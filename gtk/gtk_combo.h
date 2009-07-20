@@ -42,6 +42,13 @@ void gtk_combo_box_set_active(GtkComboBox *combo_box, gint index_)
 	combo_box->setCurrentIndex(index_);
 }
 
+gint gtk_combo_box_get_active(GtkComboBox *combo_box)
+{
+	Q_ASSERT(combo_box);
+
+	return combo_box->currentIndex();
+}
+
 /**************************************************************
  * This code implements obsolete GTK interfaces.
  *************************************************************/
