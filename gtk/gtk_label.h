@@ -10,3 +10,9 @@ GtkWidget *gtk_label_new(const gchar *text)
 	return g;
 }
 
+const gchar *gtk_label_get_text(GtkLabel *l)
+{
+	Q_ASSERT(l);
+
+	return l->text().toAscii().constData();
+}

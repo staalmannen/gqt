@@ -49,6 +49,7 @@
 #define GTK_MENU_BAR(x) dynamic_cast<QMenuBar *>(x)
 #define GTK_MENU_ITEM(x) dynamic_cast<QMenu *>(x)
 #define GTK_MENU(x) dynamic_cast<QMenu *>(x)
+#define GTK_LABEL(x) dynamic_cast<QLabel *>(x)
 
 static QApplication *gdk_app = NULL;
 
