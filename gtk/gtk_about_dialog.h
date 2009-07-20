@@ -1,3 +1,7 @@
+class GQTAboutDialog;
+typedef GQTAboutDialog GtkAboutDialog;
+
+
 class GQTAboutDialog : public GQTDialog
 {
  private:

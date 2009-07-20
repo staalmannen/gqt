@@ -1,3 +1,5 @@
+class GQTPushButton;
+typedef GQTPushButton GtkButton;
 
 class GQTPushButton : public QPushButton
 {

@@ -1,4 +1,11 @@
 
+enum GtkWindowType
+{
+	GTK_WINDOW_TOPLEVEL,
+	GTK_WINDOW_POPUP
+};
+
+
 GtkWidget *gtk_window_new(GtkWindowType type)
 {
 	// XXX: handle GtkWindowType properly.

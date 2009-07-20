@@ -17,26 +17,25 @@
 
 #include <glib/glib.h>
 
-#define GtkWidget QWidget
+typedef QWidget GtkWidget;
+typedef QWidget GtkWindow;
 
-#define GtkWindow QWidget
-#define GtkBox QWidget /* ugh */
-#define GtkContainer QWidget /* ugh */
-#define GtkHBox QHBoxLayout
-#define GtkVBox QVBoxLayout
-#define GtkTable QWidget /* ugh */
-#define GtkEntry QLineEdit
-#define GtkCombo QComboBox
-#define GtkTextView QTextEdit
-#define GtkTextBuffer QTextEdit
-#define GtkMenuBar QMenuBar
-#define GtkMenuShell QMenu
-#define GtkMenuItem QMenu
-#define GtkAboutDialog GQTAboutDialog
+typedef QWidget GtkBox; /* ugh */
+typedef QWidget GtkContainer; /* ugh */
+typedef QHBoxLayout GtkHBox;
+typedef QVBoxLayout GtkVBox;
+typedef QWidget GtkTable;
 
+typedef QLineEdit GtkEntry;
+typedef QComboBox GtkCombo;
+typedef QTextEdit GtkTextView;
+	typedef QTextEdit GtkTextBuffer;
+typedef QMenuBar GtkMenuBar;
+typedef QMenu GtkMenuShell;
+typedef QMenu GtkMenuItem;
 
-#define GtkButton GQTPushButton
-#define GtkLabel QLabel
+typedef QLabel GtkLabel;
+
 
 // Stupid GTK typecasting crap.
 #define GTK_BOX(x) x
@@ -53,12 +52,6 @@
 #define GTK_MENU(x) dynamic_cast<QMenu *>(x)
 #define GTK_LABEL(x) dynamic_cast<QLabel *>(x)
 #define GTK_ABOUT_DIALOG(x) dynamic_cast<GQTAboutDialog *>(x)
-
-enum GtkWindowType
-{
-	GTK_WINDOW_TOPLEVEL,
-	GTK_WINDOW_POPUP
-};
 
 enum GtkAttachOptions
 {
