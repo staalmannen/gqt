@@ -21,6 +21,7 @@
 #include <QTextEdit>
 #include <QMap>
 #include <QMenuBar>
+#include <QGroupBox>
 
 //#include <glib/glib.h>
 
@@ -89,6 +90,7 @@ enum GtkAttachOptions
 #include <gtk/gtk_menu.h>
 #include <gtk/gtk_about_dialog.h>
 #include <gtk/gtk_widget.h>
+#include <gtk/gtk_frame.h>
 
 
 #endif
