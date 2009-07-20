@@ -54,8 +54,6 @@
 #define GTK_LABEL(x) dynamic_cast<QLabel *>(x)
 #define GTK_ABOUT_DIALOG(x) dynamic_cast<GQTAboutDialog *>(x)
 
-static QApplication *gdk_app = NULL;
-
 enum GtkWindowType
 {
 	GTK_WINDOW_TOPLEVEL,
@@ -68,38 +66,6 @@ enum GtkAttachOptions
 	GTK_SHRINK,
 	GTK_FILL
 };
-
-
-void gtk_init(int *argc, char ***argv)
-{
-	// Don't allow double calls
-	Q_ASSERT(!gdk_app);
-
-	gdk_app = new QApplication(*argc, *argv);
-}
-
-void gtk_main()
-{
-	// XXX: this is quite probably wrong.
-	gdk_app->exec();
-	delete gdk_app;
-}
-
-void gtk_main_quit()
-{
-	// This will break out of gdk_app->exec().
-	QApplication::exit(0);
-}
-
-gboolean gtk_true()
-{
-	return TRUE;
-}
-
-gboolean gtk_false()
-{
-	return FALSE;
-}
 
 
 // TODO: respect expand, fill, padding
@@ -122,6 +88,7 @@ void gtk_box_pack_start(GtkBox *box, GtkWidget *child, gboolean expand, gboolean
 }
 
 #include <gtk/gqt_dialog.h>
+#include <gtk/gtk_main.h>
 #include <gtk/gtk_button.h>
 #include <gtk/gtk_window.h>
 #include <gtk/gtk_hbox.h>
