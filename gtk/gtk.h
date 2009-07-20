@@ -43,6 +43,9 @@ typedef QMenu GtkMenuItem;
 
 typedef QLabel GtkLabel;
 
+// XXX: will need porting for win32 (and non-gcc compilers..)
+#define MARK_DEPRECATED __attribute((deprecated))
+
 
 // Stupid GTK typecasting crap.
 #define GTK_BOX(x) x
