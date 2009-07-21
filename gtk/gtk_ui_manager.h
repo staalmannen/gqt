@@ -4,10 +4,6 @@
 class GQTUIParser : public QXmlStreamReader
 {
  public:
-	GQTUIParser(QString s) : QXmlStreamReader(s)
-	{
-	}
-
 	GtkWidget *parseUi()
 	{
 		while (!this->atEnd())
@@ -28,13 +24,7 @@ class GQTUIParser : public QXmlStreamReader
 	}
 };
 
-// Class to manage building UI from XML.
-class GQTUIManager
-{
- private:
-	GQTUIParser *parser;
-};
-typedef GQTUIManager GtkUIManager;
+typedef GQTUIParser GtkUIManager;
 
 
 GtkUIManager *gtk_ui_manager_new()
@@ -57,9 +47,9 @@ void gtk_ui_manager_add_ui_from_string(GtkUIManager *uiman, const gchar *buffer,
 
 	Q_ASSERT(length > 0);
 
-	GQTUIParser xml(QString(QByteArray(buffer, length)));
+	uiman->addData(QByteArray(buffer, length));
 
-	xml.parseUi();
+	uiman->parseUi();
 /*
 	QApplication a(argc, argv);
 	QWidget *p = new QWidget(NULL);
