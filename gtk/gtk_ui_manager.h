@@ -5,14 +5,16 @@
 class GQTUIParser : public QXmlStreamReader
 {
 	QWidget *tree_parent;
-	QMap<QString, QString> widget_map;
+	QMap<QString, QString> widget_type_map;
+	QMap<QString, QWidget *> widget_map;
  public:
 	GQTUIParser() : QXmlStreamReader()
 	{
 		this->tree_parent = NULL;
-		widget_map["menubar"] = "QMenuBar";
-		widget_map["menu"] = "QMenu";
-//		widget_map["menuitem"] = "QAction"; // oh, this is going to be fun.
+		widget_type_map["menubar"] = "QMenuBar";
+		widget_type_map["menu"] = "QMenu";
+//		widget_type_map["menuitem"] = "";
+//		widget_type_map["menuitem"] = "QAction"; // oh, this is going to be fun.
 	}
 
 	GtkWidget *parseUi()
@@ -31,35 +33,41 @@ class GQTUIParser : public QXmlStreamReader
 			{
 				current_depth++;
 				qDebug("GQTUIParser: Got %s with name %s", qPrintable(this->name().toString()), qPrintable(this->attributes().value("name").toString()));
-				QMap<QString, QString>::ConstIterator it = widget_map.find(this->name().toString());
+				QMap<QString, QString>::ConstIterator it = widget_type_map.find(this->name().toString());
 
-				if (it == widget_map.end())
+				if (it == widget_type_map.end())
 					continue;
 
+				current = widgetloader.createWidget(*it, NULL, this->attributes().value("name").toString());
 
-				if (current_depth > parent_depth)
+
+				// XXX: This +1 smells a bit magical
+				if (current_depth > parent_depth + 1)
 				{
-					qDebug("GQTUIParser: I can create %s as %s (and reset parent)", qPrintable(this->name().toString()), qPrintable(*it));
-					current = parent = widgetloader.createWidget(*it, parent, this->attributes().value("name").toString());
+					qDebug("GQTUIParser: reset parent to %s as %s", qPrintable(this->name().toString()), qPrintable(*it));
+					parent = current;
 					parent_depth = current_depth;
+				}
+
+				qDebug("Created %p, parent is %p", current, parent);
+
+				// Set it in the map for quick lookup by name
+				this->widget_map[this->attributes().value("name").toString()] = current;
+
+				// Set the root node of the tree
+				if (parent == current)
+				{
+					this->tree_parent = parent;
+
+					// Don't do anything else, there is no parent node to deal with
+					continue;
 				}
 				else
 				{
-					qDebug("GQTUIParser: I can create %s as %s (and NOT parent)", qPrintable(this->name().toString()), qPrintable(*it));
-					current = widgetloader.createWidget(*it, parent, this->attributes().value("name").toString());
+					// Set the parent of this widget. We don't want to do this for the root node, for obvious reasons.
+					this->doParenting(current, parent);
 				}
 
-				if (this->tree_parent == NULL)
-					this->tree_parent = parent;
-
-				// Just set some temporary crap so we can see what's going on, yeah?
-				QMenu *test = dynamic_cast<QMenu *>(current);
-				if (test)
-				{
-					test->setTitle(this->attributes().value("name").toString());
-				}
-
-				parent->show();
 			}
 
 			if (this->isEndElement())
@@ -69,6 +77,43 @@ class GQTUIParser : public QXmlStreamReader
 		}
 
 		return NULL;
+	}
+
+	void doParenting(QWidget *current, QWidget *parent)
+	{
+		// Special case: we can't use QWidget::setParent on menu stuff.
+		QMenuBar *menubar = dynamic_cast<QMenuBar *>(parent);
+		if (menubar)
+		{
+			QMenu *test = dynamic_cast<QMenu *>(current);
+
+			// if they're not adding a QMenu to a QMenuBar.. wtf
+			Q_ASSERT(test && parent != current);
+			test->setTitle(this->attributes().value("name").toString());
+
+			menubar->addMenu(test);
+
+			test->QObject::setParent(menubar);
+		}
+		else
+		{
+			qDebug("Parent is not QMenuBar");
+			current->setParent(parent);
+		}
+
+	}
+
+	GtkWidget *getWidget(const QString &name) const
+	{
+		QMap<QString, QWidget *>::ConstIterator it = this->widget_map.constFind(name);
+
+		qDebug("GQTUIParser: Finding widget %s by name", qPrintable(name));
+
+		Q_ASSERT(it != this->widget_map.end());
+
+		qDebug("GQTUIParser: returning %p", *it);
+
+		return *it;
 	}
 };
 
@@ -102,7 +147,11 @@ void gtk_ui_manager_add_ui_from_string(GtkUIManager *uiman, const gchar *buffer,
 
 GtkWidget *gtk_ui_manager_get_widget(GtkUIManager *uiman, const gchar *widget_name)
 {
-	return new QWidget();
+	Q_ASSERT(uiman && widget_name);
+
+	// XXX: widget_name must be a URI-like transversal of the XML, we don't yet support that, hence the ++.
+	// i.e. widget_name looks like /MainMenuBar
+	return uiman->getWidget(++widget_name);
 }
 
 #define GtkAccelGroup void
